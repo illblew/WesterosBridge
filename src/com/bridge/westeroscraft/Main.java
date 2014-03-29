@@ -35,6 +35,7 @@ public class Main extends JavaPlugin implements Listener {
 	public String pCode = null;
 	public String pExe = null;
 	public String mcUser = null;
+	public int checkOn = 1;
 
 	// log all the things
 	public void log(String text) {
@@ -77,7 +78,11 @@ public class Main extends JavaPlugin implements Listener {
 		 public void run() {
 		 try {
 		 log("Getting results from westeros db.");
+		if (checkOn == 1) {
 		 doCheck();
+		} else{
+			log("The check is off yo!");
+		}
 		 } catch (Exception e) {
 		// Throw error if broken
 		 log("Can't connect for some reason:" + e.toString());
@@ -106,11 +111,16 @@ public class Main extends JavaPlugin implements Listener {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
-				log(e.toString());
+				log("Whoops" + e.toString());
 			}
 			// all is well lets set this user up with an account.
+			log("Doing all the things");
 			pExe = sender.getName();
 			checkUser(pExe);
+		}
+		if (cmd.getName().equalsIgnoreCase("nocheck")) {
+			sender.sendMessage("Disabled db checks!");
+			checkOn = 0;
 		}
 		return false;
 	}
@@ -148,8 +158,10 @@ public class Main extends JavaPlugin implements Listener {
 
 	public void writeCode() throws SQLException {
 		// genCode
+		log("writeCode init");
 		pCode = codeGen();
 		// write
+		log("Writing code to db");
 		preparedStatement = connect
 				.prepareStatement("INSERT into users VALUES (default, ?, ?, ?, ?, ? , ?)");
 		preparedStatement.setString(1, pExe);
@@ -210,9 +222,13 @@ public class Main extends JavaPlugin implements Listener {
 			}
 			if (mcUser == null) {
 				Bukkit.broadcastMessage("else:" + mcUser);
+				log("Going to write a new code!");
 				writeCode();
 				player.sendMessage("Your code is: http://git.westeroscraft.com/index.php?code="
 						+ pCode);
+			}
+			else {
+				log("Something funky went down");
 			}
 		}
 	}

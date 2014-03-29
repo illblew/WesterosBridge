@@ -12,4 +12,10 @@ commands:
       description: This command checks the db for evals needed
       usage: /code
       permission: westerosbridge.player
-      permission-message: You're not allowed to do that!
+      permission-message: You're not allowed to do that
+   nocheck:
+         description: Disable db check
+         usage: /nocheck
+         permission: westerosbridge.nocheck
+         permission-message: No way jose
+
