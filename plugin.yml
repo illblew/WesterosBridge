@@ -1,0 +1,15 @@
+name: WesterosBridge
+version: 0.0.1
+main: com.bridge.westeroscraft.Main
+author: illblew mdcollins mikeprimm dotblank
+commands:
+   check:
+      description: This command checks the db for evals needed
+      usage: /check
+      permission: westerosbridge.check
+      permission-message: nop
+   code:
+      description: This command checks the db for evals needed
+      usage: /code
+      permission: westerosbridge.player
+      permission-message: You're not allowed to do that!
